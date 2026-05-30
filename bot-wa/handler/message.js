@@ -41,7 +41,15 @@ async function messageHandler(sock, msg) {
     const from = msg.key.remoteJid
     const isGroup = from.endsWith('@g.us')
     const sender = isGroup ? msg.key.participant : from
-    const isOwner = sender.includes(config.noOwner)
+
+    const senderNum = sender.replace(/[^0-9]/g, '')
+    const ownerNum = config.noOwner.replace(/[^0-9]/g, '')
+    const ownerLid = config.noOwnerLid ? config.noOwnerLid.replace(/[^0-9]/g, '') : ''
+
+    const isOwner = senderNum === ownerNum ||
+                    senderNum.endsWith(ownerNum) ||
+                    ownerNum.endsWith(senderNum) ||
+                    senderNum === ownerLid
 
     // Simpan user ke database
     const usersPath = path.join(__dirname, '../database/users.json')
@@ -49,6 +57,12 @@ async function messageHandler(sock, msg) {
     if (!users[sender]) {
       users[sender] = { firstSeen: new Date().toISOString() }
       fs.writeFileSync(usersPath, JSON.stringify(users, null, 2))
+    }
+
+    // Cek antilink
+    const antilinkPlugin = pluginCache['antilink']
+    if (antilinkPlugin?.onMessage && isGroup) {
+      await antilinkPlugin.onMessage({ sock, msg, from, sender, isOwner, config })
     }
 
     const text = msg.message?.conversation ||

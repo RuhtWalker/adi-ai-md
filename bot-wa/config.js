@@ -16,6 +16,7 @@ module.exports = {
   // ====== OWNER ======
   owner: 'Adii',
   noOwner: '6285268752593',
+  noOwnerLid: '185843553718459',
 
   // ====== BOT ======
   noBot: '6285756821488',
@@ -37,6 +38,6 @@ module.exports = {
   idSaluran: '120363407776393506@newsletter',
 
   // ====== GAMBAR ======
-  thumbnail: 'https://i.top4top.io/p_38025sy5e1.jpg ',
+  thumbnail: 'https://i.top4top.io/p_38025sy5e1.jpg',
 
 }

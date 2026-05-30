@@ -15,14 +15,12 @@ module.exports = {
   description: 'Kirim source code bot ke owner',
   ownerOnly: true,
 
-  async execute({ sock, from, sender, config }) {
-    // Cek apakah dari private chat owner
+  async execute({ sock, from, config }) {
     const isPrivate = !from.endsWith('@g.us')
-    const isOwner = sender.includes(config.noOwner)
 
-    if (!isPrivate || !isOwner) {
+    if (!isPrivate) {
       return await sock.sendMessage(from, { 
-        text: '❌ Perintah ini hanya bisa digunakan owner di private chat!' 
+        text: '❌ Perintah ini hanya bisa digunakan di private chat!' 
       })
     }
 
