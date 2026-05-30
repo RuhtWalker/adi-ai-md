@@ -33,8 +33,8 @@ module.exports = {
 
   // ====== LINK ======
   linkGrup: '',
-  linkSaluran: '',
-  idSaluran: '',
+  linkSaluran: 'https://whatsapp.com/channel/0029Vb7IPAcBKfhrftjWca3f',
+  idSaluran: '120363407776393506@newsletter',
 
   // ====== GAMBAR ======
   thumbnail: 'https://i.top4top.io/p_38025sy5e1.jpg ',

@@ -10,7 +10,7 @@
 const { default: makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys')
 const pino = require('pino')
 const readline = require('readline')
-const axios = require('axios')
+const { messageHandler, groupHandler } = require('./handler/message')
 const config = require('./config')
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
@@ -38,52 +38,16 @@ async function startBot() {
       startBot()
     }
     if (connection === 'open') {
-      console.log(`${config.namaBot} berhasil terhubung!`)
+      console.log(`✅ ${config.namaBot} berhasil terhubung!`)
     }
   })
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
-    const msg = messages[0]
-    if (!msg.message) return
+    await messageHandler(sock, messages[0])
+  })
 
-    const text = msg.message?.conversation || 
-                 msg.message?.extendedTextMessage?.text || ''
-    const from = msg.key.remoteJid
-
-    if (!text) return
-
-    if (text === `${config.prefix}ping`) {
-      await sock.sendMessage(from, { text: 'Pong! 🏓' })
-    }
-
-    if (text === `${config.prefix}menu`) {
-      const caption = `⊱──────────────────⊰
-      🤖 *${config.namaBot}* 🤖
-⊱──────────────────⊰
-
-❥ 👤 Owner : *${config.owner}*
-❥ ⏰ Waktu : ${new Date().toLocaleTimeString('id-ID')}
-❥ 📅 Date  : ${new Date().toLocaleDateString('id-ID')}
-
-⊱──────────────────⊰
-      📌 *PERINTAH*
-⊱──────────────────⊰
-
-✧ 🏓 *${config.prefix}ping* » Cek bot
-✧ 📋 *${config.prefix}menu* » Menu
-✧ ℹ️  *${config.prefix}info* » Info bot
-
-⊱──────────────────⊰
-  ✦ © *Powered by Adii Clutch* 🚀
-⊱──────────────────⊰`
-
-      if (config.thumbnail) {
-        const img = await axios.get(config.thumbnail, { responseType: 'arraybuffer' })
-        await sock.sendMessage(from, { image: Buffer.from(img.data), caption })
-      } else {
-        await sock.sendMessage(from, { text: caption })
-      }
-    }
+  sock.ev.on('group-participants.update', async (update) => {
+    await groupHandler(sock, update)
   })
 }
 
