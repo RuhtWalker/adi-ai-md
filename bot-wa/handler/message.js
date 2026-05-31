@@ -51,6 +51,14 @@ async function messageHandler(sock, msg) {
                     ownerNum.endsWith(senderNum) ||
                     senderNum === ownerLid
 
+    // Fungsi reply otomatis
+    const reply = async (content) => {
+      if (typeof content === 'string') {
+        return await sock.sendMessage(from, { text: content }, { quoted: msg })
+      }
+      return await sock.sendMessage(from, content, { quoted: msg })
+    }
+
     // Simpan user ke database
     const usersPath = path.join(__dirname, '../database/users.json')
     const users = JSON.parse(fs.readFileSync(usersPath))
@@ -77,18 +85,18 @@ async function messageHandler(sock, msg) {
     if (pluginCache[command]) {
       const plugin = pluginCache[command]
       if (plugin.ownerOnly && !isOwner) {
-        return await sock.sendMessage(from, { text: '❌ Fitur ini hanya untuk owner!' })
+        return await reply('❌ Fitur ini hanya untuk owner!')
       }
       if (plugin.groupOnly && !isGroup) {
-        return await sock.sendMessage(from, { text: '❌ Fitur ini hanya untuk grup!' })
+        return await reply('❌ Fitur ini hanya untuk grup!')
       }
-      return await plugin.execute({ sock, msg, from, sender, isOwner, isGroup, args, text, command, config })
+      return await plugin.execute({ sock, msg, from, sender, isOwner, isGroup, args, text, command, config, reply })
     }
 
     const customCase = JSON.parse(fs.readFileSync(path.join(__dirname, '../case/custom.json')))
     const found = customCase.find(c => c.command === command)
     if (found) {
-      return await sock.sendMessage(from, { text: found.response })
+      return await reply(found.response)
     }
 
   } catch (err) {

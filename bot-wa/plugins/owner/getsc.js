@@ -30,7 +30,7 @@ module.exports = {
     const fileName = `${config.namaBot.replace(/\s/g, '-')}-sc-${date}.zip`
     const filePath = path.join(__dirname, '../../tmp', fileName)
 
-    exec(`cd /data/data/com.termux/files/home && zip -r bot-wa/tmp/${fileName} bot-wa --exclude "bot-wa/node_modules/*" --exclude "bot-wa/auth/*" --exclude "bot-wa/tmp/*"`, async (err) => {
+    exec(`cd /data/data/com.termux/files/home && zip -r bot-wa/tmp/${fileName} bot-wa --exclude "bot-wa/node_modules/*" --exclude "bot-wa/session/*" --exclude "bot-wa/tmp/*"`, async (err) => {
       if (err) {
         return await sock.sendMessage(from, { text: '❌ Gagal mengambil source code!\n\n' + err.message })
       }

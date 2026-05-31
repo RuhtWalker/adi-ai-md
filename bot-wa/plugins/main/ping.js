@@ -24,7 +24,7 @@ module.exports = {
   description: 'Cek bot aktif',
   ownerOnly: false,
 
-  async execute({ sock, from, config }) {
+  async execute({ sock, from, msg, config, reply }) {
     const start = Date.now()
     const totalMem = os.totalmem()
     const freeMem = os.freemem()
@@ -33,7 +33,7 @@ module.exports = {
     const uptime = formatUptime(process.uptime())
     const ping = Date.now() - start
 
-    await sock.sendMessage(from, { text: `⊱──────────────────⊰
+    await reply(`⊱──────────────────⊰
       🤖 *${config.namaBot}*
 ⊱──────────────────⊰
 
@@ -45,6 +45,6 @@ module.exports = {
 
 ⊱──────────────────⊰
   ✦ © *Powered by Adii Clutch* 🚀
-⊱──────────────────⊰` })
+⊱──────────────────⊰`)
   }
 }

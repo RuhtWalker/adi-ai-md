@@ -42,7 +42,7 @@ module.exports = {
   description: 'Tampilkan menu bot',
   ownerOnly: false,
 
-  async execute({ sock, from, config }) {
+  async execute({ sock, from, msg, config, reply }) {
     const caption = `⊱──────────────────⊰
       🤖 *${config.namaBot}* 🤖
 ⊱──────────────────⊰
@@ -66,9 +66,9 @@ ${getPluginList()}
       await sock.sendMessage(from, {
         image: Buffer.from(img.data),
         caption
-      })
+      }, { quoted: msg })
     } else {
-      await sock.sendMessage(from, { text: caption })
+      await reply(caption)
     }
   }
 }

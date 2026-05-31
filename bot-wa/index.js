@@ -17,7 +17,7 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const question = (text) => new Promise((resolve) => rl.question(text, resolve))
 
 async function startBot() {
-  const { state, saveCreds } = await useMultiFileAuthState('auth')
+  const { state, saveCreds } = await useMultiFileAuthState('session')
 
   const sock = makeWASocket({
     auth: state,

@@ -12,7 +12,7 @@ module.exports = {
       name: 'ADI-AI-MD',
       script: 'index.js',
       watch: false,
-      ignore_watch: ['node_modules', 'auth', 'tmp'],
+      ignore_watch: ['node_modules', 'session', 'tmp'],
       max_memory_restart: '512M',
       restart_delay: 3000,
       autorestart: true,
