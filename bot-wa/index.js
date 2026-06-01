@@ -7,7 +7,7 @@
 // ⊱──────────────────────────────────────────⊰
 // ================================================================
 
-const { default: makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys')
+const { default: makeWASocket, useMultiFileAuthState } = require('alipclutch-baileys')
 const pino = require('pino')
 const readline = require('readline')
 const { messageHandler, groupHandler } = require('./handler/message')

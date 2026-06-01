@@ -8,7 +8,7 @@
 
 const axios = require('axios')
 const FormData = require('form-data')
-const { downloadContentFromMessage } = require('@whiskeysockets/baileys')
+const { downloadContentFromMessage } = require('alipclutch-baileys')
 
 const API_KEY = 'cov_live_665b4c7dc6def02bf04862b4f0aabe2acd5b72dca69b4c2a'
 const API_URL = 'https://api.covenant.sbs/api/ai/gemini'

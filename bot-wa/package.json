@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@whiskeysockets/baileys": "*",
+    "alipclutch-baileys": "^8.6.52",
     "axios": "^1.0.0",
     "dotenv": "^17.4.2",
     "form-data": "^4.0.0",

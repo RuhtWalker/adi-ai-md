@@ -7,7 +7,7 @@
 // ================================================================
 
 const axios = require('axios')
-const { downloadContentFromMessage } = require('@whiskeysockets/baileys')
+const { downloadContentFromMessage } = require('alipclutch-baileys')
 
 module.exports = {
   command: ['removebg', 'rmbg'],

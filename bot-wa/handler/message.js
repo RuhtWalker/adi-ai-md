@@ -51,7 +51,6 @@ async function messageHandler(sock, msg) {
                     ownerNum.endsWith(senderNum) ||
                     senderNum === ownerLid
 
-    // Fungsi reply otomatis
     const reply = async (content) => {
       if (typeof content === 'string') {
         return await sock.sendMessage(from, { text: content }, { quoted: msg })
@@ -73,9 +72,23 @@ async function messageHandler(sock, msg) {
       await antilinkPlugin.onMessage({ sock, msg, from, sender, isOwner, config })
     }
 
-    const text = msg.message?.conversation ||
-                 msg.message?.extendedTextMessage?.text || ''
+    // Ambil teks dari berbagai jenis pesan termasuk button
+    let text = msg.message?.conversation ||
+               msg.message?.extendedTextMessage?.text ||
+               msg.message?.buttonsResponseMessage?.selectedButtonId ||
+               msg.message?.listResponseMessage?.singleSelectReply?.selectedRowId ||
+               msg.message?.templateButtonReplyMessage?.selectedId || ''
 
+    // Cek interactive response
+    try {
+      const interactiveResponse = msg.message?.interactiveResponseMessage?.nativeFlowResponseMessage?.paramsJson
+      if (interactiveResponse) {
+        const parsed = JSON.parse(interactiveResponse)
+        if (parsed?.id) text = parsed.id
+      }
+    } catch {}
+
+    if (!text) return
     if (!text.startsWith(config.prefix)) return
 
     const args = text.slice(config.prefix.length).trim().split(' ')
