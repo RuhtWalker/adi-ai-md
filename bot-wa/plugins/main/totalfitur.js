@@ -30,7 +30,7 @@ module.exports = {
       const folderPath = path.join(__dirname, '../../plugins', folder)
       if (!fs.existsSync(folderPath)) continue
       const files = fs.readdirSync(folderPath).filter(f => f.endsWith('.js'))
-      
+
       let commands = []
       for (const file of files) {
         const plugin = require(path.join(folderPath, file))
@@ -41,23 +41,17 @@ module.exports = {
       }
 
       if (commands.length > 0) {
-        list += `\n${label} (${commands.length})\n`
-        list += commands.map(c => `✧ ${config.prefix}${c}`).join('\n')
-        list += '\n'
+        list += `❖━━〔 ${label} 〕━━❖\n`
+        list += commands.map(c => `⊛ ${config.prefix}${c}`).join('\n')
+        list += '\n\n'
       }
     }
 
-    await reply(`⊱──────────────────⊰
-    📊 *TOTAL FITUR BOT*
-⊱──────────────────⊰
+    await reply(`❖━━〔 📊 𝗧𝗼𝘁𝗮𝗹 𝗙𝗶𝘁𝘂𝗿 〕━━❖
+⊛ Bot    : *${config.namaBot}*
+⊛ Total  : *${total} Fitur*
+❖━━━━━━━━━━━━━━━❖
 
-🤖 *Bot* : ${config.namaBot}
-📦 *Total* : ${total} fitur
-
-⊱──────────────────⊰
-${list}
-⊱──────────────────⊰
-  ✦ © *Powered by Adii Clutch* 🚀
-⊱──────────────────⊰`)
+${list}❖━━━━━━━━━━━━━━━❖`)
   }
 }

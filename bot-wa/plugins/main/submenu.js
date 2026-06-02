@@ -14,7 +14,7 @@ module.exports = {
   async execute({ sock, from, msg, command, config, reply }) {
     const menus = {
       'menu-utama': {
-        title: '📌 MENU UTAMA',
+        title: '📌 𝗠𝗲𝗻𝘂 𝗨𝘁𝗮𝗺𝗮',
         items: [
           { cmd: 'ping', desc: 'Cek bot aktif' },
           { cmd: 'info', desc: 'Info tentang bot' },
@@ -23,7 +23,7 @@ module.exports = {
         ]
       },
       'menu-ai': {
-        title: '🤖 MENU AI',
+        title: '🤖 𝗠𝗲𝗻𝘂 𝗔𝗜',
         items: [
           { cmd: 'ai', desc: 'Chat dengan AI Gemini' },
           { cmd: 'gemini', desc: 'Chat dengan Gemini' },
@@ -34,7 +34,7 @@ module.exports = {
         ]
       },
       'menu-download': {
-        title: '📥 MENU DOWNLOAD',
+        title: '📥 𝗠𝗲𝗻𝘂 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱',
         items: [
           { cmd: 'play', desc: 'Download lagu YouTube' },
           { cmd: 'ytmp3', desc: 'Download audio YouTube' },
@@ -45,7 +45,7 @@ module.exports = {
         ]
       },
       'menu-tools': {
-        title: '🔧 MENU TOOLS',
+        title: '🔧 𝗠𝗲𝗻𝘂 𝗧𝗼𝗼𝗹𝘀',
         items: [
           { cmd: 'pinterest', desc: 'Cari gambar Pinterest' },
           { cmd: 'tts', desc: 'Text to Speech' },
@@ -55,7 +55,7 @@ module.exports = {
         ]
       },
       'menu-grup': {
-        title: '👥 MENU GRUP',
+        title: '👥 𝗠𝗲𝗻𝘂 𝗚𝗿𝘂𝗽',
         items: [
           { cmd: 'welcome', desc: 'Aktifkan welcome member' },
           { cmd: 'setwelcome', desc: 'Atur pesan welcome' },
@@ -65,7 +65,7 @@ module.exports = {
         ]
       },
       'menu-owner': {
-        title: '👑 MENU OWNER',
+        title: '👑 𝗠𝗲𝗻𝘂 𝗢𝘄𝗻𝗲𝗿',
         items: [
           { cmd: 'addcase', desc: 'Tambah perintah custom' },
           { cmd: 'delcase', desc: 'Hapus perintah custom' },
@@ -80,47 +80,12 @@ module.exports = {
     const menu = menus[command]
     if (!menu) return
 
-    let text = `⊱──────────────────⊰\n`
-    text += `      ${menu.title}\n`
-    text += `⊱──────────────────⊰\n\n`
-
+    let text = `❖━━〔 ${menu.title} 〕━━❖\n\n`
     menu.items.forEach(item => {
-      text += `✧ *${config.prefix}${item.cmd}* » ${item.desc}\n`
+      text += `⊛ *${config.prefix}${item.cmd}* » ${item.desc}\n`
     })
+    text += `\n❖━━━━━━━━━━━━━━━❖`
 
-    text += `\n⊱──────────────────⊰\n`
-    text += `  ✦ © *Powered by Adii Clutch* 🚀\n`
-    text += `⊱──────────────────⊰`
-
-    try {
-      await sock.sendMessage(from, {
-        interactiveMessage: {
-          title: text,
-          footer: '',
-          nativeFlowMessage: {
-            buttons: [
-              {
-                name: 'cta_url',
-                buttonParamsJson: JSON.stringify({
-                  display_text: '📢 Lihat Saluran',
-                  url: config.linkSaluran || 'https://whatsapp.com',
-                  merchant_url: config.linkSaluran || 'https://whatsapp.com'
-                })
-              },
-              {
-                name: 'quick_reply',
-                buttonParamsJson: JSON.stringify({
-                  display_text: '🔙 Kembali ke Menu',
-                  id: `${config.prefix}menu`
-                })
-              }
-            ]
-          }
-        }
-      })
-    } catch (err) {
-      console.log('Submenu error:', err.message)
-      await reply(text)
-    }
+    await reply(text)
   }
 }

@@ -25,18 +25,18 @@ module.exports = {
     const userName = msg.pushName || 'User'
     const tanggal = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
-    const menuText = `╭─❏ 𝗜𝗻𝗳𝗼 𝗕𝗼𝘁
-│▣ Bot Name : *${config.namaBot}*
-│▣ Status   : *Online 24 Jam*
-│▣ Uptime   : *${uptime}*
-╰──────────❏
+    const menuText = `❖━━〔 🤖 𝗜𝗻𝗳𝗼 𝗕𝗼𝘁 〕━━❖
+⊛ Bot Name : *${config.namaBot}*
+⊛ Status   : *Online 24 Jam*
+⊛ Uptime   : *${uptime}*
+❖━━━━━━━━━━━━━━━❖
 
-╭─❏ 𝗜𝗻𝗳𝗼 𝗨𝘀𝗲𝗿
-│▣ Nama  : *${userName}*
-│▣ Owner : *${config.owner}*
-│▣ Date  : *${new Date().toLocaleDateString('id-ID')}*
-│▣ Time  : *${new Date().toLocaleTimeString('id-ID')}*
-╰──────────❏`
+❖━━〔 👤 𝗜𝗻𝗳𝗼 𝗨𝘀𝗲𝗿 〕━━❖
+⊛ Nama  : *${userName}*
+⊛ Owner : *${config.owner}*
+⊛ Date  : *${new Date().toLocaleDateString('id-ID')}*
+⊛ Time  : *${new Date().toLocaleTimeString('id-ID')}*
+❖━━━━━━━━━━━━━━━❖`
 
     const sections = [
       {

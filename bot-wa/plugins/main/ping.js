@@ -12,7 +12,7 @@ function formatUptime(seconds) {
   const h = Math.floor(seconds / 3600)
   const m = Math.floor((seconds % 3600) / 60)
   const s = Math.floor(seconds % 60)
-  return `${h} jam ${m} menit ${s} detik`
+  return `${h}j ${m}m ${s}d`
 }
 
 function formatMemory(bytes) {
@@ -33,18 +33,12 @@ module.exports = {
     const uptime = formatUptime(process.uptime())
     const ping = Date.now() - start
 
-    await reply(`⊱──────────────────⊰
-      🤖 *${config.namaBot}*
-⊱──────────────────⊰
-
-🏓 *Pong!*
-⚡ *Response* : ${ping}ms
-⏱️ *Uptime*   : ${uptime}
-💾 *Memory*   : ${formatMemory(usedMem)} / ${formatMemory(totalMem)}
-💻 *CPU Load* : ${cpuLoad}%
-
-⊱──────────────────⊰
-  ✦ © *Powered by Adii Clutch* 🚀
-⊱──────────────────⊰`)
+    await reply(`❖━━〔 🏓 𝗣𝗶𝗻𝗴 〕━━❖
+⊛ Status   : *Pong!*
+⊛ Response : *${ping}ms*
+⊛ Uptime   : *${uptime}*
+⊛ Memory   : *${formatMemory(usedMem)} / ${formatMemory(totalMem)}*
+⊛ CPU Load : *${cpuLoad}%*
+❖━━━━━━━━━━━━━━━❖`)
   }
 }
