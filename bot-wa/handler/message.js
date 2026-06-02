@@ -10,6 +10,7 @@
 const config = require('../config')
 const fs = require('fs')
 const path = require('path')
+const { sendWithButton } = require('../lib/function')
 
 const pluginCache = {}
 
@@ -51,9 +52,10 @@ async function messageHandler(sock, msg) {
                     ownerNum.endsWith(senderNum) ||
                     senderNum === ownerLid
 
+    // Fungsi reply dengan button saluran otomatis
     const reply = async (content) => {
       if (typeof content === 'string') {
-        return await sock.sendMessage(from, { text: content }, { quoted: msg })
+        return await sendWithButton(sock, from, msg, content, config)
       }
       return await sock.sendMessage(from, content, { quoted: msg })
     }
@@ -72,7 +74,7 @@ async function messageHandler(sock, msg) {
       await antilinkPlugin.onMessage({ sock, msg, from, sender, isOwner, config })
     }
 
-    // Ambil teks dari berbagai jenis pesan termasuk button
+    // Ambil teks dari berbagai jenis pesan
     let text = msg.message?.conversation ||
                msg.message?.extendedTextMessage?.text ||
                msg.message?.buttonsResponseMessage?.selectedButtonId ||

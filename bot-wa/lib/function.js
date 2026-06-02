@@ -6,8 +6,7 @@
 // ⊱──────────────────────────────────────────⊰
 // ================================================================
 
-const fs = require('fs')
-const path = require('path')
+const os = require('os')
 
 // Format ukuran file
 function formatSize(bytes) {
@@ -40,16 +39,6 @@ function formatTime(date = new Date()) {
   return date.toLocaleTimeString('id-ID')
 }
 
-// Cek apakah string adalah URL
-function isUrl(str) {
-  try {
-    new URL(str)
-    return true
-  } catch {
-    return false
-  }
-}
-
 // Sleep/delay
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -60,9 +49,42 @@ function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-// Capitalize huruf pertama
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+// Kirim pesan dengan button saluran
+async function sendWithButton(sock, from, msg, text, config) {
+  try {
+    await sock.sendMessage(from, {
+      interactiveMessage: {
+        title: text,
+        footer: '',
+        nativeFlowMessage: {
+          buttons: [
+            {
+              name: 'cta_url',
+              buttonParamsJson: JSON.stringify({
+                display_text: '📢 Lihat Saluran',
+                url: config.linkSaluran || 'https://whatsapp.com',
+                merchant_url: config.linkSaluran || 'https://whatsapp.com'
+              })
+            }
+          ]
+        }
+      }
+    }, { quoted: msg })
+  } catch (err) {
+    await sock.sendMessage(from, { text }, { quoted: msg })
+  }
+}
+
+// Kirim gambar dengan button saluran
+async function sendImageWithButton(sock, from, msg, image, caption, config) {
+  try {
+    await sock.sendMessage(from, {
+      image,
+      caption,
+    }, { quoted: msg })
+  } catch (err) {
+    await sock.sendMessage(from, { image, caption }, { quoted: msg })
+  }
 }
 
 module.exports = {
@@ -70,8 +92,8 @@ module.exports = {
   formatUptime,
   formatDate,
   formatTime,
-  isUrl,
   sleep,
   random,
-  capitalize
+  sendWithButton,
+  sendImageWithButton
 }
